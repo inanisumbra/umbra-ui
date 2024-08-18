@@ -7,3 +7,4 @@ export const decorators = [
 		</GlobalStylesWrapper>
 	),
 ];
+export const tags = ['autodocs'];

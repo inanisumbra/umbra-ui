@@ -1,11 +1,22 @@
 module.exports = {
-	stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+	stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
+
 	addons: [
 		'@storybook/addon-links',
 		'@storybook/addon-essentials',
+		'@storybook/addon-themes',
 		'@storybook/preset-create-react-app',
+		'@chromatic-com/storybook',
 	],
-	core: {
-		builder: 'webpack5',
+
+	framework: {
+		name: '@storybook/react-webpack5',
+		options: {},
+	},
+
+	docs: {},
+
+	typescript: {
+		reactDocgen: 'react-docgen-typescript',
 	},
 };

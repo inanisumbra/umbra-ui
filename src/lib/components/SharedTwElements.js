@@ -44,7 +44,7 @@ export const Field = styled.input(({ error, color }) => [
 		tracking-wide
 		opacity-90
 		bg-transparent
-		border-width[2px]
+		[border-width:2px]
 		border-opacity-5
 		text-base
 		h-11
@@ -64,7 +64,7 @@ export const AreaField = styled.textarea(({ error, color, height }) => [
 		bg-transparent
 		text-main
 		text-base
-		border-width[2px]
+		[border-width:2px]
 		p-3
 		outline-none
 		rounded

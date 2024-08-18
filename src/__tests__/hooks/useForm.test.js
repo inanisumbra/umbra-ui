@@ -1,5 +1,6 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { useForm } from '../../lib';
+import { act } from 'react';
 
 const testForm = { test: '' };
 const testFormErrors = {

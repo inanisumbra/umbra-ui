@@ -18,6 +18,11 @@ const themeColors = {
 };
 
 module.exports = {
+	content: [
+		'./public/index.html',
+		'./lib/components/**/*.{html,js}',
+		'./lib/utils/**/*.{html,js}',
+	],
 	theme: {
 		borderWidth: {
 			DEFAULT: '1.75px',

@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import { Wrapper, Label, Field } from './SharedTwElements';
 
 const Input = forwardRef(function Input(props, inputRef) {
-	const { label, name, color, error, width, ...inputProps } = props;
+	const {
+		label = '',
+		name = '',
+		color = 'primary',
+		error = false,
+		width = 'fill',
+		...inputProps
+	} = props;
 	return (
 		<Wrapper width={width}>
 			<Label htmlFor={name} color={color} error={error}>
@@ -23,20 +30,11 @@ const Input = forwardRef(function Input(props, inputRef) {
 });
 
 Input.propTypes = {
-	label: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired,
-	error: PropTypes.bool.isRequired,
-	width: PropTypes.oneOf(['quarter', 'third', 'half', 'twothirds', 'fill'])
-		.isRequired,
-	color: PropTypes.oneOf(['primary', 'secondary', 'tertiary']).isRequired,
-};
-
-Input.defaultProps = {
-	label: '',
-	name: '',
-	error: false,
-	width: 'fill',
-	color: 'primary',
+	label: PropTypes.string,
+	name: PropTypes.string,
+	error: PropTypes.bool,
+	width: PropTypes.oneOf(['quarter', 'third', 'half', 'twothirds', 'fill']),
+	color: PropTypes.oneOf(['primary', 'secondary', 'tertiary']),
 };
 
 export default Input;
