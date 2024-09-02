@@ -1,4 +1,5 @@
 import { Input, widthStoriesController, colorStoriesController } from '../lib';
+import { StoryFn, Meta } from "@storybook/react";
 
 export default {
 	title: 'Components/Input',
@@ -23,9 +24,9 @@ export default {
 		error: false,
 		width: 'fill',
 	},
-};
+} as Meta<typeof Input>;
 
-const Template = (args) => <Input {...args} />;
+const Template:StoryFn<typeof Input> = (args) => <Input {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

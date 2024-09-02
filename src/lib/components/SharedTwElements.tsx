@@ -1,4 +1,12 @@
+import { ForwardedRef } from 'react';
 import tw, { styled } from 'twin.macro';
+
+export type WidthProp = 'quarter' | 'third' | 'half' | 'twothirds' | 'fill';
+export type HeightProp = 'xs' | 'sm' | 'base' | 'lg' | 'xl';
+export type ColorProp = 'primary' | 'secondary' | 'tertiary';
+export type VariantProp = 'contained' | 'outlined';
+export type InputRef = ForwardedRef<HTMLInputElement>;
+export type TextAreaRef = ForwardedRef<HTMLTextAreaElement>;
 
 export const widthStyles = {
 	quarter: tw`w-1/4`,
@@ -28,18 +36,27 @@ export const borderStyles = {
 	tertiary: tw`border-tertiary`,
 };
 
-export const Wrapper = styled.div(({ width }) => [
+interface WrapperProps {
+	width: WidthProp;
+}
+
+export const Wrapper = styled.div(({ width='fill' }: WrapperProps) => [
 	tw`relative flex flex-col justify-center mb-6 no-underline rounded`,
 	widthStyles[width],
 ]);
 
-export const Label = styled.label(({ error, color }) => [
+interface LabelProps {
+	error?: Boolean;
+	color: ColorProp;
+}
+
+export const Label = styled.label(({ error=false, color='primary' }:LabelProps) => [
 	tw`inline-flex mb-2 text-base tracking-wide uppercase`,
 	colorStyles[color],
 	error && tw`text-pink-600 border-pink-600`,
 ]);
 
-export const Field = styled.input(({ error, color }) => [
+export const Field = styled.input(({ error=false, color='primary' }:LabelProps) => [
 	tw`w-auto
 		tracking-wide
 		opacity-90
@@ -57,7 +74,11 @@ export const Field = styled.input(({ error, color }) => [
 	error ? tw`text-pink-600 border-pink-600` : colorStyles[color],
 ]);
 
-export const AreaField = styled.textarea(({ error, color, height }) => [
+interface AreaFieldProps extends LabelProps {
+	height: HeightProp;
+}
+
+export const AreaField = styled.textarea(({ error=false, color='primary', height='lg' }:AreaFieldProps) => [
 	tw`w-full
 		tracking-wide
 		opacity-90

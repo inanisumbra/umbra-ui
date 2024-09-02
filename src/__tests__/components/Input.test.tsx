@@ -1,12 +1,12 @@
 import { fireEvent, render } from '@testing-library/react';
-import { Input } from '../../lib';
+import { Input, InputProps } from '../../lib';
 import { createSerializer } from '@emotion/jest';
 
 expect.addSnapshotSerializer(createSerializer());
 
-const setup = () => {
-	const utils = render(<Input />);
-	const input = utils.getByTestId('input');
+const setup = (props:InputProps) => {
+	const utils = render(<Input {...props} />);
+	const input = utils.getByTestId('input') as HTMLInputElement;
 	return {
 		input,
 		...utils,
@@ -14,12 +14,26 @@ const setup = () => {
 };
 
 test('Input should render correctly', () => {
-	const { asFragment } = setup();
+	const { asFragment } = setup({
+		label: 'Label',
+		name: 'name',
+		width: 'fill',
+		color: 'primary',
+		error: false
+	});
 	expect(asFragment()).toMatchSnapshot();
 });
 
 test('Input should update internal value when onChange fired', () => {
-	const { input } = setup();
+	const { input } = setup({
+		label: 'Label',
+		name: 'name',
+		width: 'fill',
+		color: 'primary',
+		error: false
+	});
+
+	fireEvent.focus(input);
 
 	fireEvent.change(input, {
 		target: {

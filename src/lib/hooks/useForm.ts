@@ -1,36 +1,28 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, ChangeEvent } from 'react';
+
+type Form = Record<string, any>;
+type FormErrors = Record<string, boolean>;
+type FormValidators = Record<string, any>;
 
 const INITIAL_FORM = { name: '' };
 const INITIAL_FORM_ERRORS = {
 	name: false,
 };
 export const FORM_VALIDATORS = {
-	/**
-	 * Description
-	 * @param {string} value
-	 * @returns {bool}
-	 */
-	name: (value) => value && /[A-Za-z0-9]+/.test(value),
+	name: (value:string) => value && /[A-Za-z0-9]+/.test(value),
 };
 
-/**
- * Description
- * @param {Object} initForm=INITIAL_FORM
- * @param {Object} initFormErrors=INITIAL_FORM_ERRORS
- * @param {Object} formValidators=FORM_VALIDATORS
- * @returns {Object}
- */
 const useForm = (
-	initForm = INITIAL_FORM,
-	initFormErrors = INITIAL_FORM_ERRORS,
-	formValidators = FORM_VALIDATORS
+	initForm:Form = INITIAL_FORM,
+	initFormErrors:FormErrors = INITIAL_FORM_ERRORS,
+	formValidators:FormValidators = FORM_VALIDATORS
 ) => {
 	const [form, setForm] = useState(initForm);
 	const [formErrors, setFormErrors] = useState(initFormErrors);
 	const [submittable, setSubmittable] = useState(false);
 
 	const handleFormChange = useCallback(
-		(event) => {
+		(event: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
 			const { name, value } = event.target;
 			if (name && value && value !== form[name]) {
 				setForm({ ...form, [name]: value });
@@ -44,7 +36,7 @@ const useForm = (
 		[form, formErrors]
 	);
 	const handleFormBlur = useCallback(
-		(event) => {
+		(event: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
 			const { name, value } = event.target;
 			setFormErrors({
 				...formErrors,
@@ -55,7 +47,7 @@ const useForm = (
 		[formErrors, formValidators, handleFormChange]
 	);
 	const handleFormFocus = useCallback(
-		(event) => {
+		(event:ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
 			const { name } = event.target;
 			if (name && Object.keys(form).indexOf(name) !== -1) {
 				setFormErrors({

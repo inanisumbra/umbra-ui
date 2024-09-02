@@ -1,5 +1,6 @@
 import { Button, widthStoriesController, colorStoriesController } from '../lib';
 import { action } from '@storybook/addon-actions';
+import { StoryFn, Meta } from "@storybook/react";
 
 const variantStoriesController = {
 	outlined: 'Outlined',
@@ -38,9 +39,9 @@ export default {
 		width: 'fill',
 		disabled: false,
 	},
-};
+} as Meta<typeof Button>;
 
-const Template = (args) => <Button {...args} />;
+const Template:StoryFn<typeof Button> = (args) => <Button {...args} />;
 
 export const Contained = Template.bind({});
 Contained.args = {

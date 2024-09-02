@@ -1,19 +1,19 @@
 import { fireEvent, render } from '@testing-library/react';
-import { Textarea } from '../../lib';
+import { TextArea, TextAreaProps } from '../../lib';
 import { createSerializer } from '@emotion/jest';
 
 expect.addSnapshotSerializer(createSerializer());
 
-const setup = (props) => {
-	const utils = render(<Textarea {...props} />);
-	const textarea = utils.getByTestId('textarea');
+const setup = (props:TextAreaProps) => {
+	const utils = render(<TextArea {...props} />);
+	const textarea = utils.getByTestId('textarea') as HTMLTextAreaElement;
 	return {
 		textarea,
 		...utils,
 	};
 };
 
-test('Textarea should render correctly', () => {
+test('TextArea should render correctly', () => {
 	const { asFragment } = setup({
 		label: '',
 		name: '',
@@ -25,7 +25,7 @@ test('Textarea should render correctly', () => {
 	expect(asFragment()).toMatchSnapshot();
 });
 
-test('Textarea should update internal value when onChange fired', () => {
+test('TextArea should update internal value when onChange fired', () => {
 	const { textarea } = setup({
 		label: '',
 		name: '',
