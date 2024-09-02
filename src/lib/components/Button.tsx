@@ -1,6 +1,24 @@
-import PropTypes from 'prop-types';
+
 import tw, { styled } from 'twin.macro';
-import { widthStyles } from './SharedTwElements';
+import { widthStyles, ColorProp, VariantProp, WidthProp } from './SharedTwElements';
+import { ReactNode, FC, ComponentPropsWithoutRef, ButtonHTMLAttributes } from 'react';
+
+
+interface StyledButtonProps {
+	disabled?: boolean;
+    variant: VariantProp;
+    width: WidthProp;
+    color: ColorProp;
+}
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    label: string | ReactNode;
+	disabled?: boolean;
+    variant: VariantProp;
+    width: WidthProp;
+    color: ColorProp;
+}
+
 const variantStyles = {
 	contained: {
 		primary: tw`text-gray-50 bg-primary-light hover:cursor-pointer hover:bg-transparent hover:text-primary-light hover:border-primary-light hover:[border-width:2px] hover:border-opacity-5`,
@@ -13,19 +31,19 @@ const variantStyles = {
 		tertiary: tw`[border-width:2px] border-opacity-5 text-tertiary-light border-tertiary-light bg-transparent cursor-pointer hover:bg-tertiary-light hover:text-gray-50 hover:border-none`,
 	},
 };
-const StyledButton = styled.button(({ width, variant, color, disabled }) => [
+const StyledButton = styled.button(({ width, variant, color, disabled }:StyledButtonProps) => [
 	tw`relative flex items-center justify-center mr-6 text-base font-bold tracking-wide uppercase transition [transition-duration:.3s] rounded shadow-none h-11`,
 	variantStyles[variant][color],
 	widthStyles[width],
 	disabled && tw`pointer-events-none grayscale-8`,
 ]);
 
-const Button = ({
-	label = 'Label',
-	width = 'fill',
-	variant = 'contained',
-	color = 'primary',
-	disabled = false,
+const Button:FC<ButtonProps> = ({
+	label,
+	width,
+	variant,
+	color,
+	disabled,
 	...buttonProps
 }) => (
 	<StyledButton
@@ -39,13 +57,5 @@ const Button = ({
 		{label}
 	</StyledButton>
 );
-
-Button.propTypes = {
-	disabled: PropTypes.bool,
-	label: PropTypes.string,
-	variant: PropTypes.oneOf(['contained', 'outlined']),
-	width: PropTypes.oneOf(['quarter', 'third', 'half', 'twothirds', 'fill']),
-	color: PropTypes.oneOf(['primary', 'secondary', 'tertiary']),
-};
 
 export default Button;

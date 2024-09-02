@@ -1,10 +1,11 @@
-import { GlobalStylesWrapper } from '../src/lib';
+import { GlobalStyles } from '../src/lib';
 
 export const decorators = [
 	(Story) => (
-		<GlobalStylesWrapper>
+		<>
+			<GlobalStyles />
 			<Story />
-		</GlobalStylesWrapper>
+		</>
 	),
 ];
 export const tags = ['autodocs'];

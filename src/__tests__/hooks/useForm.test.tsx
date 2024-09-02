@@ -1,13 +1,13 @@
 import { renderHook } from '@testing-library/react';
 import { useForm } from '../../lib';
-import { act } from 'react';
+import { act, ChangeEvent } from 'react';
 
 const testForm = { test: '' };
 const testFormErrors = {
 	test: false,
 };
 const testFormValidators = {
-	test: (value) => value && value.length && /[A-Za-z0-9]+/.test(value),
+	test: (value:string) => value && value.length && /[A-Za-z0-9]+/.test(value),
 };
 
 const fillEvent = {
@@ -44,7 +44,7 @@ test('Form should update value with hanldeChange', () => {
 		useForm(testForm, testFormErrors, testFormValidators)
 	);
 	act(() => {
-		result.current.handleChange(fillEvent);
+		result.current.handleChange(fillEvent as ChangeEvent<HTMLInputElement | HTMLTextAreaElement>);
 	});
 
 	expect(result.current.form.test).toBe(fillEvent.target.value);
@@ -55,7 +55,7 @@ test('Form should reset to start value after change', () => {
 		useForm(testForm, testFormErrors, testFormValidators)
 	);
 	act(() => {
-		result.current.handleChange(fillEvent);
+		result.current.handleChange(fillEvent as ChangeEvent<HTMLInputElement | HTMLTextAreaElement>);
 	});
 
 	expect(result.current.form.test).toBe(fillEvent.target.value);
@@ -72,7 +72,7 @@ test('Form should be submittable after blur', () => {
 	);
 
 	act(() => {
-		result.current.handleBlur(fillEvent);
+		result.current.handleBlur(fillEvent as ChangeEvent<HTMLInputElement | HTMLTextAreaElement>);
 	});
 
 	expect(result.current.form.test).toBe(fillEvent.target.value);
@@ -85,14 +85,14 @@ test('Form should reset error to false after focus', () => {
 	);
 
 	act(() => {
-		result.current.handleBlur(emptyEvent);
+		result.current.handleBlur(emptyEvent as ChangeEvent<HTMLInputElement | HTMLTextAreaElement>);
 	});
 
 	expect(result.current.form.test).toBe(emptyEvent.target.value);
 	expect(result.current.errors.test).toBe(true);
 
 	act(() => {
-		result.current.handleFocus(emptyEvent);
+		result.current.handleFocus(emptyEvent as ChangeEvent<HTMLInputElement | HTMLTextAreaElement>);
 	});
 
 	expect(result.current.errors.test).toBe(false);

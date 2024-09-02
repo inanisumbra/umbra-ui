@@ -1,10 +1,10 @@
 import { fireEvent, render } from '@testing-library/react';
-import { Button } from '../../lib';
+import { Button, ButtonProps } from '../../lib';
 import { createSerializer } from '@emotion/jest';
 
 expect.addSnapshotSerializer(createSerializer());
 
-const setup = (props) => {
+const setup = (props: ButtonProps) => {
 	const utils = render(<Button {...props} />);
 	const button = utils.getByTestId('button');
 	return {
@@ -14,14 +14,26 @@ const setup = (props) => {
 };
 
 test('Button should render correctly', () => {
-	const { asFragment } = setup();
+	const { asFragment } = setup({
+		label: 'Label',
+		width: 'fill',
+		variant: 'contained',
+		color: 'primary',
+		disabled: false
+	});
 	expect(asFragment()).toMatchSnapshot();
 });
 
 test('calls "onClick" prop on button click', () => {
 	// Render new instance in every test to prevent leaking state
 	const onClick = jest.fn();
-	const { button } = setup({ onClick });
+	const { button } = setup({
+		onClick, label: 'Label',
+		width: 'fill',
+		variant: 'contained',
+		color: 'primary',
+		disabled: false
+	});
 
 	fireEvent.click(button);
 	expect(onClick).toHaveBeenCalled();
